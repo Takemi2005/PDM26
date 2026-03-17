@@ -25,70 +25,53 @@ State<TodoPage> createState() => _TodoPageState();
 
 
 class _TodoPageState extends State<TodoPage> {
-  @override
-Widget build(BuildContext context) {
-    return Scaffold(
-    appBar: AppBar(
-    title: const Text("Tarefas"),
-),
-    body: const Text("Em construção"),
-  );
- }
-}
+  final List<String> tarefasList = [];
+  final TextEditingController controller = TextEditingController();
 
-
-final List<String> tarefasList = [];
-final TextEditingController controller = TextEditingController();
-
-
-body: Column(
-children: [
-TextField(
-controller: controller,
-),
-ElevatedButton(
-onPressed: () {},
-child: const Text("Adicionar"),
-  ),
- ],
-),
-
-
-
-void adicionarTarefa() {
+  void adicionarTarefa() {
     setState(() {
-    tarefasList.add(controller.text);
-});
-controller.clear();
-}
+      tarefasList.add(controller.text);
+    });
+    controller.clear();
+  }
 
+  void removerTarefa(int index) {
+    setState(() {
+      tarefasList.removeAt(index);
+    });
+  }
 
-ElevatedButton(
-  onPressed: adicionarTarefa,
-  child: const Text("Adicionar"),
-),
-
-Expanded(
-child: ListView.builder(
-  itemCount: tarefasList.length,
-  itemBuilder: (context, index) {
-
-return ListTile(
-   title: Text(tarefasList[index]),
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Tarefas"),
+      ),
+      body: Column(
+        children: [
+          TextField(
+            controller: controller,
+          ),
+          ElevatedButton(
+            onPressed: adicionarTarefa,
+            child: const Text("Adicionar"),
+          ),
+          Expanded(
+            child: ListView.builder(
+              itemCount: tarefasList.length,
+              itemBuilder: (context, index) {
+                return ListTile(
+                  title: Text(tarefasList[index]),
+                  trailing: IconButton(
+                    icon: const Icon(Icons.delete),
+                    onPressed: () => removerTarefa(index),
+                  ),
+                );
+              },
+            ),
+          ),
+        ],
+      ),
     );
-  },
- ),
-),
-
-
-void removerTarefa(int index) {
-   setState(() {
-tarefasList.removeAt(index);
- });
+  }
 }
-
-
-trailing: IconButton(
-  icon: const Icon(Icons.delete),
-  onPressed: () => removerTarefa(index),
-),

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 void main() {
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
-    home: HumorAPP()));
+    home: HumorAPP())); 
 }
 
 class HumorAPP extends StatefulWidget {
